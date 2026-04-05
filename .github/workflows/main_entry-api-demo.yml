@@ -25,9 +25,11 @@ jobs:
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
+        working-directory: FrontendApi
 
       - name: dotnet publish
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+        working-directory: FrontendApi
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -51,5 +53,5 @@ jobs:
         with:
           app-name: 'entry-api-demo'
           slot-name: 'Production'
-          package: .
+          package: ${{env.DOTNET_ROOT}}/myapp
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F8963E06D69E4DD586A60D43D44BF632 }}
