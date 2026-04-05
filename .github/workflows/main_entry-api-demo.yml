@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy ASP.Net Core app to Azure Web App - entry-api-demo
+name: Build and deploy Integration API to Azure Web App
 
 on:
   push:
@@ -12,44 +9,41 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-    permissions:
-      contents: read #This is required for actions/checkout
-
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up .NET Core
+      - name: Set up .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.x'
 
-      - name: Build with dotnet
+      - name: Build IntegrationApi
         run: dotnet build --configuration Release
+        working-directory: IntegrationApi
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+      - name: Publish IntegrationApi
+        run: dotnet publish -c Release -o ./publish
+        working-directory: IntegrationApi
 
-      - name: Upload artifact for deployment job
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          name: integrationapi-artifact
+          path: IntegrationApi/publish
 
   deploy:
     runs-on: windows-latest
     needs: build
-    
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: .net-app
-      
+          name: integrationapi-artifact
+
       - name: Deploy to Azure Web App
-        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'entry-api-demo'
+          app-name: 'INTEGRATION-APP-NAME'
           slot-name: 'Production'
-          package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0496051F8AC542469281CEB7D3B30B48 }}
+          package: IntegrationApi/publish
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_INTEGRATION }}
