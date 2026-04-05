@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -43,7 +44,7 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'entry-api-demo'                # EXACT Frontend App Service name
+          app-name: 'entry-api-demo'
           slot-name: 'Production'
-          package: frontendapi-artifact
+          package: ./frontendapi-artifact
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FRONTEND }}
