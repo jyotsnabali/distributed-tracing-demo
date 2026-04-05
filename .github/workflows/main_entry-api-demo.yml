@@ -43,7 +43,7 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'FRONTEND-APP-NAME'
+          app-name: 'entry-api-demo'
           slot-name: 'Production'
           package: FrontendApi/publish
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FRONTEND }} }}
