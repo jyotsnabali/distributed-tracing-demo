@@ -1,4 +1,4 @@
-name: Build and deploy Frontend API to Azure Web App
+name: Build and Deploy Frontend API to Azure Web App
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up .NET
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.x'
@@ -43,7 +43,7 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'entry-api-demo'
+          app-name: 'entry-api-demo'                # EXACT Frontend App Service name
           slot-name: 'Production'
-          package: FrontendApi/publish
+          package: frontendapi-artifact
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FRONTEND }}
