@@ -6,5 +6,3 @@ builder.Services.AddHttpClient(); // IMPORTANT
 var app = builder.Build();
 app.MapControllers();
 app.Run();
-
-builder.Services.AddHttpClient();
