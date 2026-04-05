@@ -1,4 +1,4 @@
-name: Build and deploy Integration API to Azure Web App
+name: Build and deploy Frontend API to Azure Web App
 
 on:
   push:
@@ -17,19 +17,19 @@ jobs:
         with:
           dotnet-version: '10.x'
 
-      - name: Build IntegrationApi
+      - name: Build FrontendApi
         run: dotnet build --configuration Release
-        working-directory: IntegrationApi
+        working-directory: FrontendApi
 
-      - name: Publish IntegrationApi
+      - name: Publish FrontendApi
         run: dotnet publish -c Release -o ./publish
-        working-directory: IntegrationApi
+        working-directory: FrontendApi
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: integrationapi-artifact
-          path: IntegrationApi/publish
+          name: frontendapi-artifact
+          path: FrontendApi/publish
 
   deploy:
     runs-on: windows-latest
@@ -38,7 +38,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: integrationapi-artifact
+          name: frontendapi-artifact
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
@@ -46,4 +46,4 @@ jobs:
           app-name: 'entry-api-demo'
           slot-name: 'Production'
           package: FrontendApi/publish
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FRONTEND }} }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FRONTEND }}
