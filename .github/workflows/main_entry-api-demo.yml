@@ -43,7 +43,7 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'INTEGRATION-APP-NAME'
+          app-name: 'FRONTEND-APP-NAME'
           slot-name: 'Production'
-          package: IntegrationApi/publish
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_INTEGRATION }}
+          package: FrontendApi/publish
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FRONTEND }} }}
