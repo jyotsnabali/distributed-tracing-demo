@@ -6,17 +6,18 @@ namespace FrontendApi.Controllers
     [Route("process")]
     public class ProcessController : ControllerBase
     {
-        private readonly HttpClient _httpClient;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public ProcessController(IHttpClientFactory factory)
+        public ProcessController(IHttpClientFactory httpClientFactory)
         {
-            _httpClient = factory.CreateClient();
+            _httpClientFactory = httpClientFactory;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            await _httpClient.GetAsync(
+            using var client = _httpClientFactory.CreateClient();
+            using var response = await client.GetAsync(
                 "https://INTEGRATION-APP-NAME.azurewebsites.net/process"
             );
 
