@@ -1,0 +1,11 @@
+## .NET Core
+bin/
+obj/
+
+## VS/Rider IDE
+.vs/
+.idea/
+*.user
+
+## Logs
+*.log
